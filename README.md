@@ -16,7 +16,7 @@ To get started with Doodling, clone the repository and install the necessary dep
 
 ```bash
 git clone https://github.com/rolite-root/doodling.git
-cd doodling_prototype
+cd doodling
 npm install
 ```
 
