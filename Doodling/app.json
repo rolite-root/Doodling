@@ -5,6 +5,36 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "sdkVersion": "52.0.0",
-    "platforms": ["ios", "android", "web"]
+    "assetBundlePatterns": ["**/*"],
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "platforms": ["ios", "android", "web"],
+    "plugins": [
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Doodling to access your camera."
+        }
+      ]
+    ],
+    "android": {
+      "permissions": ["CAMERA", "RECORD_AUDIO"],
+      "package": "com.rolite912.Doodling"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs camera access to capture photos and videos.",
+        "NSMicrophoneUsageDescription": "This app needs microphone access to record audio."
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ed45aead-9059-4fc3-9ba2-5c25a0a00396"
+      }
+    },
+    "newArchEnabled": true
   }
 }
