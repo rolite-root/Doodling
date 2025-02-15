@@ -8,7 +8,8 @@ import HomeScreen from '../screens/HomeScreen';
 import Camera from '../screens/Camera';
 import ChatScreen from '../screens/ChatScreen';
 import MenuScreen from '../screens/MenuScreen';
-import {Chat} from '../screens/NewChatScreen';
+import Chat from '../screens/NewChatScreen';
+import Feed from '../screens/feed';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ export default function AppNavigator() {
       <Stack.Screen name="CameraScreen" component={Camera} />
       <Stack.Screen name="MenuScreen" component={MenuScreen} />
       <Stack.Screen name="NewChat" component={Chat} />
+      <Stack.Screen name="Feed" component={Feed} />
 
     </Stack.Navigator>
   );

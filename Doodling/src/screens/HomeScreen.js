@@ -13,6 +13,10 @@ const HomeScreen = () => {
     navigation.navigate('CameraScreen');
   };
 
+  const handleFeed = () => {
+    navigation.navigate('Feed');
+  };
+
   const handleChat = () => {
     navigation.navigate('Chat');
   };
