@@ -1,0 +1,17 @@
+{
+  "name": "doodling",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "cd Doodling && npx expo start",
+    "start:backend": "cd Doodling-Backend && npm run start"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

@@ -56,7 +56,7 @@ const HomeScreen = () => {
           placeholderTextColor="#aaa"
           style={styles.searchBar}
         />
-        <TouchableOpacity onPress={handleExplore} style={styles.iconButton}>
+        <TouchableOpacity onPress={handleCamera} style={styles.iconButton}>
           <Icon name="camera-alt" size={24} color="#ffffff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleMenu} style={styles.iconButton}>
@@ -89,7 +89,7 @@ const HomeScreen = () => {
       </TouchableOpacity>
 
       {/* Bottom Navigation */}
-      <View style={styles.bottomNav} onPress={handleExplore}>
+      <View style={styles.bottomNav}>
         {tabs.map((tab) => (
           <TouchableOpacity
             key={tab}

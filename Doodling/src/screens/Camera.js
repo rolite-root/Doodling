@@ -1,38 +1,50 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Alert, ImageBackground, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 
+const CameraType = { back: 'back', front: 'front' };
+const FlashMode = { off: 'off', on: 'on' };
+
 const CameraApp = () => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
-  const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
+  const [permission, setPermission] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setPermission(status === 'granted');
+    })();
+  }, []);
+  const [cameraType, setCameraType] = useState(CameraType.back);
+  const [flashMode, setFlashMode] = useState(FlashMode.off);
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
   const cameraRef = useRef(null);
 
   useEffect(() => {
-    const requestCameraPermission = async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-      if (status !== 'granted') {
-        Alert.alert('Camera Permission Denied', 'Please allow camera access in your device settings.');
-      }
-    };
-    requestCameraPermission();
-  }, []);
+    if (!permission || permission.status !== 'granted') {
+      setPermission();
+    }
+  }, [permission]);
+
+  if (!permission) {
+    return <Text>Requesting camera permission...</Text>;
+  }
+  if (permission.status !== 'granted') {
+    return <Text>No access to camera. Please enable it in settings.</Text>;
+  }
 
   const handleCameraReady = () => setIsCameraReady(true);
 
   const switchCameraType = () => {
     setCameraType((prevType) =>
-      prevType === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back
+      prevType === CameraType.back ? CameraType.front : CameraType.back
     );
   };
 
   const toggleFlashMode = () => {
     setFlashMode((prevFlashMode) =>
-      prevFlashMode === Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.on : Camera.Constants.FlashMode.off
+      prevFlashMode === FlashMode.off ? FlashMode.on : FlashMode.off
     );
   };
 
@@ -49,9 +61,6 @@ const CameraApp = () => {
     setPreviewVisible(false);
   };
 
-  if (hasPermission === null) return <Text>Requesting camera permission...</Text>;
-  if (hasPermission === false) return <Text>No access to the camera</Text>;
-
   return (
     <View style={styles.container}>
       {previewVisible && capturedImage ? (
@@ -67,12 +76,12 @@ const CameraApp = () => {
           <View style={styles.cameraControls}>
             <TouchableOpacity style={styles.flashButton} onPress={toggleFlashMode}>
               <Text style={styles.flashIcon}>
-                {flashMode === Camera.Constants.FlashMode.on ? '⚡️ On' : '⚡️ Off'}
+                {flashMode === FlashMode.on ? '⚡️ On' : '⚡️ Off'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.switchButton} onPress={switchCameraType}>
               <Text style={styles.switchText}>
-                {cameraType === Camera.Constants.Type.back ? '🔄 Back' : '🔄 Front'}
+                {cameraType === CameraType.back ? '🔄 Back' : '🔄 Front'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.captureButton} onPress={takePicture} />
