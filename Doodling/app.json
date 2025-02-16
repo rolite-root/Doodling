@@ -24,7 +24,8 @@
           "cameraPermission": "Allow Doodling to access your camera."
         }
       ],
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-router"
     ],
     "android": {
       "permissions": [

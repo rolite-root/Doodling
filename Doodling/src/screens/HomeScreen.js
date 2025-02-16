@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
-
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [selectedTab, setSelectedTab] = useState('Chats');
   const tabs = ['Chats', 'Updates', 'Communities', 'Calls'];
-  
+
   const handleCamera = () => {
     navigation.navigate('CameraScreen');
   };
@@ -28,6 +28,7 @@ const HomeScreen = () => {
   const handleNewChat = () => {
     navigation.navigate('NewChat');
   };
+
   const mockChats = Array.from({ length: 2575 }, (_, index) => ({
     id: index.toString(),
     name: `Contact ${index + 1}`,
@@ -35,8 +36,19 @@ const HomeScreen = () => {
     time: '9:12 AM',
   }));
 
+  const CustomFloatingButton = ({ onPress }) => (
+    <TouchableOpacity style={styles.floatingButton} onPress={onPress}>
+      <FontAwesome5 name="Home" size={28} color="white" />
+    </TouchableOpacity>
+  );
+
+  const handleExplore = () => {
+    navigation.navigate('Explore');
+  };
+
   return (
     <View style={styles.container}>
+      {/* Top Bar */}
       <View style={styles.topBar}>
         <Text style={styles.appTitle}>Doodling</Text>
         <TextInput
@@ -44,7 +56,7 @@ const HomeScreen = () => {
           placeholderTextColor="#aaa"
           style={styles.searchBar}
         />
-        <TouchableOpacity onPress={handleCamera} style={styles.iconButton}>
+        <TouchableOpacity onPress={handleExplore} style={styles.iconButton}>
           <Icon name="camera-alt" size={24} color="#ffffff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleMenu} style={styles.iconButton}>
@@ -77,14 +89,14 @@ const HomeScreen = () => {
       </TouchableOpacity>
 
       {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
+      <View style={styles.bottomNav} onPress={handleExplore}>
         {tabs.map((tab) => (
           <TouchableOpacity
             key={tab}
             onPress={() => setSelectedTab(tab)}
             style={styles.navItem}
           >
-            <Icon name={selectedTab === tab ? "radio-button-checked" : "radio-button-unchecked"} size={24} color="#ffffff" />
+            <Ionicons name={selectedTab === tab ? "radio-button-checked" : "radio-button-unchecked"} size={24} color="#ffffff" />
             <Text
               style={[
                 styles.navText,
@@ -95,6 +107,9 @@ const HomeScreen = () => {
             </Text>
           </TouchableOpacity>
         ))}
+
+        {/* Floating Button at the center */}
+        <CustomFloatingButton onPress={handleFeed} />
       </View>
     </View>
   );
@@ -149,6 +164,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#075E54',
     paddingVertical: 10,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 70,
+    alignItems: 'center',
   },
   navItem: { alignItems: 'center' },
   navText: { color: '#fff', fontSize: 12, marginTop: 2 },

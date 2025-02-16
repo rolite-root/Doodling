@@ -10,6 +10,7 @@ import ChatScreen from '../screens/ChatScreen';
 import MenuScreen from '../screens/MenuScreen';
 import Chat from '../screens/NewChatScreen';
 import Feed from '../screens/feed';
+import Explore from '../screens/ExploreScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export default function AppNavigator() {
       <Stack.Screen name="MenuScreen" component={MenuScreen} />
       <Stack.Screen name="NewChat" component={Chat} />
       <Stack.Screen name="Feed" component={Feed} />
+      <Stack.Screen name="Explore" component={Explore} />
 
     </Stack.Navigator>
   );
